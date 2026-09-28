@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "failures": 0,
+  "checked_at_utc": "2026-09-28T04:57:30.980035+00:00",
+  "python_version": "3.12.3",
+  "sympy_version": "1.14.0",
+  "script_sha256": "34c4329084e1630b957adba0fc0f3bdb63c108392cb8cc2e05d73a29969db3ea",
+  "counts": {
+    "two_primary_presentations": 1168,
+    "cyclic_presentations": 96,
+    "odd_and_mixed_presentations": 4590,
+    "trivial_presentations": 4,
+    "invalid_inputs_rejected": 8
+  },
+  "coverage": {
+    "two_primary": "All characters on one to three cyclic factors with exponents 1 through 4.",
+    "cyclic": "All valid characters at orders 1 through 32, with an independent cyclic closed-form check.",
+    "odd_and_mixed": "All valid characters on one to three factors of orders 2, 3, 4, 6, 9, 10, 12, 15 that contain an odd-primary part.",
+    "equivalences": [
+      "three-layer reduced",
+      "full integer-layer quotient"
+    ],
+    "limitation": "Checks integer presentations and invariant factors; does not replace the topological completeness proof."
+  }
+}

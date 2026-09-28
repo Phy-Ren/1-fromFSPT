@@ -1,0 +1,40 @@
+{
+  "convention": "Current four-word x2, additive phases; B_N=-P_N/(2N).",
+  "Z2": {
+    "five_simplices": 1024,
+    "failures": {
+      "majorana_root": 0,
+      "complex_root": 0,
+      "bosonic_root": 0,
+      "cartan_primitive": 0,
+      "majorana_stacking": 0,
+      "complex_stacking": 0
+    },
+    "legacy_root_counterexamples": 212
+  },
+  "Z4": {
+    "five_simplices": 1048576,
+    "failures": {
+      "digit_primitive": 0,
+      "gauge_primitive": 0,
+      "bosonic_reduction": 0
+    }
+  },
+  "mixed_lift_ambiguity": {
+    "group": "Z4 x Z2",
+    "four_simplices": 262144,
+    "failures": {
+      "lift_change_mod_bosonic_identification": 0
+    }
+  },
+  "microscopic_witness": {
+    "source_archive_sha256": "5b7295b176adc5846ee7aee7f2d104680698a53306c19c3bebc60dc362287cf0",
+    "interpretation": "Comparison with fixed microscopic input arrays, not regeneration of their projector amplitudes.",
+    "single_input_states": 1024,
+    "pair_input_states": 64,
+    "failures": {
+      "obstruction_coordinate_change": 0,
+      "stacking_coordinate_change": 0
+    }
+  }
+}
