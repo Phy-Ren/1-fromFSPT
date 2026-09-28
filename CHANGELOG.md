@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased — 2+1D one-form checks
+
+- Added `cochain_21d_verify.py` and its recorded results for the exact
+  Kitaev-loop cochain identities supporting the finite-Abelian 2+1D
+  no-go theorem. All 4,096 occupation/twist pairs and eight tetrahedral
+  backgrounds pass.
+- Documented the theorem's response convention, the separate physical
+  equivalence argument, and the numerical checker's scope; added its
+  run command to CI.
+- The 3+1D algorithms, classification conventions, and numerical results
+  are unchanged.
+
 ## Unreleased — classification scope clarification
 
 The initial release called the absolute-bordism comparison a "full"

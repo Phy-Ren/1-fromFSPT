@@ -1,0 +1,10 @@
+{
+  "independent_occupation_twist_pairs": 4096,
+  "binary_tetrahedra": 8,
+  "failures": {
+    "change_of_obstruction": 0,
+    "double_equivalence_is_coboundary": 0,
+    "twisted_candidate_top_phase_is_exact": 0
+  },
+  "scope": "Exact cochain identities; the microscopic equivalence and completeness are proved separately."
+}

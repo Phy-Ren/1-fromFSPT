@@ -1,7 +1,7 @@
 # 1-fromFSPT
 
-Exact cochain calculations and finite-Abelian classification for 3+1D
-fermionic phases with one-form symmetry.
+Exact cochain calculations for 2+1D and 3+1D fermionic phases with one-form
+symmetry, and a finite-Abelian 3+1D classification calculator.
 
 The code accompanies the one-form solutions in the manuscript
 *Lattice Model of Higher-Form/Group Fermionic Symmetry-Protected Topological
@@ -19,6 +19,7 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
 
+python cochain_21d_verify.py --output results/cochain_21d_checks.json
 python cochain_oneform_verify.py --output results/cochain_oneform_checks.json
 python verify_classification_snf.py --output results/classification_checks.json
 ```
@@ -31,7 +32,7 @@ uv pip install -r requirements.txt
 . .venv/bin/activate
 ```
 
-## Calculate a classification
+## Calculate a 3+1D classification
 
 Write the symmetry as a product of cyclic groups with orders `N_i` and
 specify the parity character by coefficients `epsilon_i` in `{0,1}`.
@@ -121,7 +122,42 @@ The scripts evaluate the full mixed quadratic presentation for arbitrary
 finite products. They do not infer product-group answers by multiplying
 single-factor classifications.
 
-## Exact cochain checks
+## 2+1D no-go checks
+
+For finite Abelian, unitary, pure one-form symmetry, the manuscript proves
+that every symmetry-dependent 2+1D response is trivial, for either a split
+or twisted fermionic lift. Purely gravitational phases are excluded, and
+a choice of trivialization at zero background is not additional phase data.
+
+The obstruction permits only the complex-fermion occupations `n_2=0` and,
+for nonzero twist `w`, `n_2=w`. A contractible Kitaev-loop equivalence
+identifies them. With additive phases, its cochain expression is
+
+```text
+(n_2, nuhat_3) ~ (n_2+w, nuhat_3 + (n_2 cup_1 w)/2).
+```
+
+The incoming operation is `H^0(X,Z_2) -> H^2(X,Z_2), 1 -> w` in the
+binary Majorana coefficient row. Although `H^1(X,Z_2)=0` rules out a
+Majorana occupation, it does not remove this equivalence. The microscopic
+argument uses auxiliary vacuum pairs, triangle Kitaev loops, and local
+reconnections with the one-form transport signs. Its separate
+cohomological formulation uses the twisted differential `Sq^2 + w cup`.
+
+`cochain_21d_verify.py` checks the phase identities with integer arithmetic:
+
+- All 4,096 pairs of independent binary occupation and twist cocycles on
+  a four-simplex for compatibility with the obstruction.
+- The square of the equivalence on those pairs, verifying that its
+  remaining phase is the coboundary `d tilde(w)/4`.
+- All eight binary two-cocycles on a tetrahedron for the explicit
+  trivialization of the candidate `n_2=w`.
+
+All three residual counts vanish. These are cochain checks; the script
+does not reconstruct the auxiliary-fermion circuit or prove completeness.
+It imports the higher-cup operations from `cochain_oneform_verify.py`.
+
+## 3+1D cochain checks
 
 `cochain_oneform_verify.py` implements normalized interval-cut products
 and signed integer higher cups. All phase comparisons use integer
@@ -175,8 +211,9 @@ cohomological proof; they do not establish its topological inputs.
 
 Recorded results are in `results/`. The classification report includes
 the script hash, Python and SymPy versions, timestamp, and coverage.
-GitHub Actions runs the same two exact checkers and the CLI interpretation
-tests. Run those tests locally with `python -m unittest test_cli.py`.
+GitHub Actions runs both cochain checkers, the classification checker, and
+the CLI interpretation tests. Run the latter locally with
+`python -m unittest test_cli.py`.
 
 ## References
 
@@ -188,11 +225,17 @@ The mathematical inputs include:
 - A. Kapustin and R. Thorngren,
   [Topological Field Theory on a Lattice, Discrete Theta-Angles and Confinement](https://arxiv.org/abs/1308.2926),
   for universal quadratic groups and Pontryagin squares.
+- Q.-R. Wang and Z.-C. Gu,
+  [Construction and Classification of Symmetry-Protected Topological Phases in Interacting Fermion Systems](https://arxiv.org/abs/1811.00536),
+  for the auxiliary Kitaev-loop equivalence in the zero-form construction.
+  The manuscript checks the transport signs for its one-form adaptation.
 - T. Johnson-Freyd,
   [(3+1)D Topological Orders with Only a Z2-Charged Particle](https://arxiv.org/abs/2011.11165),
   and R. Kobayashi, A. Prem, and M. Yu,
   [Sixteen-Fold Way for Fermionic Topological Orders](https://arxiv.org/abs/2606.28682),
-  for the twisted supercohomology and relative `Z_16` convention.
+  for twisted supercohomology and the relative `Z_16` convention.
+  Johnson-Freyd also gives the explicitly one-form differential used in
+  the 2+1D no-go argument.
 - D. S. Freed and M. J. Hopkins,
   [Reflection Positivity and Invertible Topological Phases](https://arxiv.org/abs/1604.06527),
   for the Anderson-dual universal coefficient sequence used in the
