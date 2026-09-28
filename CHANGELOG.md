@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased — 4+1D finite one-form classification
+
+- Added `classify_41d.py` for the full finite-Abelian bosonic quotient
+  after all four decoration layers are included. It reports the absence
+  of intrinsically fermionic classes without equating this with a trivial
+  response group.
+- Added independent Smith-form/product-formula comparisons and binary
+  kernel/image checks: 6,254 presentations, 63 binary twists, and eight
+  invalid inputs pass.
+- Added exact cochain checks of the incoming Majorana coboundary, its
+  compensating phase, complex stacking, and the secondary identification.
+  All residuals vanish. Recorded outputs are in `results/`.
+- Added the new checks to CI. Existing 2+1D and 3+1D algorithms and
+  classification conventions are unchanged.
+
 ## Unreleased — 2+1D one-form checks
 
 - Added `cochain_21d_verify.py` and its recorded results for the exact

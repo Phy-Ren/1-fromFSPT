@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "failures": 0,
+  "checked_at_utc": "2026-09-28T14:17:07.490385+00:00",
+  "python_version": "3.12.3",
+  "sympy_version": "1.14.0",
+  "source_sha256": {
+    "classify_41d.py": "412eb095e861c2d0a390a98d9d114b7e32cb4e6e83331c9f2fefa63e685fd6e6",
+    "verify_41d_classification.py": "e88405286149fd159ac1505f3706464056384f5da6d229aa733b93a62b64a978"
+  },
+  "counts": {
+    "cyclic_presentations": 96,
+    "product_presentations": 6156,
+    "trivial_presentations": 2,
+    "binary_complex_layer_checks": 63,
+    "invalid_inputs_rejected": 8
+  },
+  "coverage": {
+    "cyclic": "All valid twists for orders 1 through 64.",
+    "products": "All ordered two- and three-factor tuples with orders 1,2,3,4,6,8,9,10,12,15,16 and all valid twists.",
+    "complex_layer": "Every binary twist for zero through five degree-two generators; verifies D_w squared=0 and ker obstruction=image incoming.",
+    "limitation": "Arithmetic checks of the quotient and polynomial exactness; topological inputs and local equivalences require their separate proofs."
+  }
+}

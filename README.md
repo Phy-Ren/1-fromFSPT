@@ -1,7 +1,8 @@
 # 1-fromFSPT
 
-Exact cochain calculations for 2+1D and 3+1D fermionic phases with one-form
-symmetry, and a finite-Abelian 3+1D classification calculator.
+Exact cochain calculations for fermionic phases with one-form symmetry
+in 2+1D through 4+1D, and finite-Abelian classification calculators for
+3+1D and 4+1D.
 
 The code accompanies the one-form solutions in the manuscript
 *Lattice Model of Higher-Form/Group Fermionic Symmetry-Protected Topological
@@ -51,7 +52,7 @@ invariant factors denotes the trivial group. The first two examples give
 For a split lift, supply all-zero character coefficients. For the trivial
 symmetry, use `--orders 1 --twist 0`.
 
-## Which classification is being computed?
+## Which 3+1D classification is being computed?
 
 The default is the paper's **relative one-form classification**. Its data
 are `(n_2, n_3, nu_4)`: Majorana-chain, complex-fermion, and bosonic
@@ -90,7 +91,7 @@ The scope is **finite Abelian, unitary, pure one-form symmetry** with a
 parity character. Continuous symmetries and nontrivial two-group
 Postnikov data are outside this calculation.
 
-## Mathematical input
+## 3+1D mathematical input
 
 Let `X = B²A` and `w` be the parity character. The bosonic subgroup is
 
@@ -121,6 +122,55 @@ For an even cyclic group with nonzero character, the relative one-form group is
 The scripts evaluate the full mixed quadratic presentation for arbitrary
 finite products. They do not infer product-group answers by multiplying
 single-factor classifications.
+
+## 4+1D classification and no-go theorem
+
+The full decoration data are `(n_2,n_3,n_4,nu_5)`, where `n_2` is the
+integer-valued `p+ip` occupation, `n_3` the Majorana occupation, and `n_4`
+the complex-fermion occupation. For finite Abelian, unitary, pure
+one-form symmetry, every class has a bosonic representative, for every
+parity character. This does not mean that every response is trivial.
+
+```bash
+python classify_41d.py --orders 2 --twist 1
+python classify_41d.py --orders 4 --twist 1
+python classify_41d.py --orders 2,2 --twist 1,0
+python verify_41d_classification.py --output results/classification_41d_checks.json
+python cochain_41d_verify.py --output results/cochain_41d_checks.json
+```
+
+These examples return `Z_2`, the trivial group, and `Z_2 x Z_2`.
+The calculation starts with all four layers: `H^2(B²A,Z)=0` removes the
+`p+ip` occupation, while `H^1(B²A,Z)=0` removes residual integer
+equivalences. The Majorana layer is obstructed, and every unobstructed
+complex-fermion occupation is an incoming Majorana coboundary, with its
+compensating phase included. The bosonic quotient is
+
+```text
+F_(4+1)(A,w) = H^5(B²A,U(1)) / < (Sq^2 v + w v)/2 : v in H^3(B²A,Z_2) >.
+```
+
+For `A = product_i Z_(N_i)`, its abstract group is the product of
+`Z_gcd(N_i,N_j)` over `i<j`, with one extra `Z_2` precisely when
+`Sq^1 w != 0`. In cyclic coordinates this condition means that some
+active character coefficient has `N_i = 2 mod 4`. The extra response
+is the bosonic action `(w cup Sq^1 w)/2`, equal to `(w_2 cup w_3)/2`
+on the allowed twisted-spin backgrounds.
+
+The calculator takes the Smith normal form of the full cohomological
+quotient in the supplied cyclic coordinates. It does not assume that
+raw mixed generators in those coordinates survive independently.
+`verify_41d_classification.py` compares this quotient with the abstract
+product formula, and separately checks the complex-layer kernel/image
+identity by binary linear algebra. The cochain checker verifies the
+compensating Majorana phase and the vanishing secondary identification.
+The manuscript supplies the cohomology and bordism proofs; finite
+arithmetic checks alone do not establish completeness.
+
+In degree five the absolute bordism characters, the quotient by the
+ordinary-spin image, and the cofiber-relative convention agree. There
+is therefore no separate `--absolute-bordism` option for this calculator.
+The existing 3+1D calculator and its conventions are unchanged.
 
 ## 2+1D no-go checks
 
@@ -211,8 +261,8 @@ cohomological proof; they do not establish its topological inputs.
 
 Recorded results are in `results/`. The classification report includes
 the script hash, Python and SymPy versions, timestamp, and coverage.
-GitHub Actions runs both cochain checkers, the classification checker, and
-the CLI interpretation tests. Run the latter locally with
+GitHub Actions runs the cochain and classification checkers in all three
+dimensions and the 3+1D CLI interpretation tests. Run the latter locally with
 `python -m unittest test_cli.py`.
 
 ## References
@@ -241,3 +291,7 @@ The mathematical inputs include:
   for the Anderson-dual universal coefficient sequence used in the
   absolute-bordism comparison. This does not by itself establish an extra
   higher-form lattice equivalence.
+- A. Debray and M. Yu,
+  [What Bordism-Theoretic Anomaly Cancellation Can Do for U](https://arxiv.org/abs/2210.04911),
+  Corollary 4.44 and Proposition 4.45, for the Wu-manifold characteristic
+  number used to exclude the remaining 4+1D differential.

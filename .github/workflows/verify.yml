@@ -24,9 +24,14 @@ jobs:
         run: python cochain_oneform_verify.py
       - name: Check finite-Abelian classifications
         run: python verify_classification_snf.py
+      - name: Check 4+1D quotient and fermionic-layer exactness
+        run: python verify_41d_classification.py
+      - name: Check 4+1D Majorana coboundary phases
+        run: python cochain_41d_verify.py
       - name: Check CLI classification labels and compatibility
         run: python -m unittest test_cli.py
       - name: Calculate example groups
         run: |
           python classify.py --orders 4,6 --twist 1,0
           python classify.py --orders 8 --twist 1 --absolute-bordism
+          python classify_41d.py --orders 2,2 --twist 1,0

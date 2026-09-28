@@ -1,0 +1,43 @@
+{
+  "convention": "four-word x2 and signed integer interval-cut cups",
+  "dependency": "companion cochain_oneform_verify.py",
+  "scope": "cochain identities; no regenerated lattice projector data",
+  "cases": {
+    "all_binary_six_simplices_split": {
+      "simplices": 32768,
+      "failures": {
+        "closed_complex_occupation": 0,
+        "full_majorana_coboundary": 0
+      }
+    },
+    "all_binary_six_simplices_diagonal_twist": {
+      "simplices": 32768,
+      "failures": {
+        "closed_complex_occupation": 0,
+        "full_majorana_coboundary": 0
+      }
+    },
+    "independent_binary_source_and_twist": {
+      "simplices": 8192,
+      "seed": 20260928,
+      "failures": {
+        "closed_complex_occupation": 0,
+        "full_majorana_coboundary": 0
+      }
+    },
+    "complex_stacking_phase": {
+      "simplices": 8192,
+      "failures": {
+        "stacking_preserves_phase_equation": 0
+      }
+    },
+    "universal_secondary_source": {
+      "simplices": 1024,
+      "failures": {
+        "vanishing_complex_occupation": 0,
+        "secondary_phase_is_exact": 0
+      }
+    }
+  },
+  "total_failures": 0
+}
