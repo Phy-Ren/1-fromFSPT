@@ -22,7 +22,9 @@ jobs:
         run: python cochain_oneform_verify.py
       - name: Check finite-Abelian classifications
         run: python verify_classification_snf.py
+      - name: Check CLI classification labels and compatibility
+        run: python -m unittest test_cli.py
       - name: Calculate example groups
         run: |
           python classify.py --orders 4,6 --twist 1,0
-          python classify.py --orders 8 --twist 1 --full
+          python classify.py --orders 8 --twist 1 --absolute-bordism

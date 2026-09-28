@@ -1,10 +1,10 @@
 {
   "status": "passed",
   "failures": 0,
-  "checked_at_utc": "2026-09-28T04:57:30.980035+00:00",
+  "checked_at_utc": "2026-09-28T06:18:13.344547+00:00",
   "python_version": "3.12.3",
   "sympy_version": "1.14.0",
-  "script_sha256": "34c4329084e1630b957adba0fc0f3bdb63c108392cb8cc2e05d73a29969db3ea",
+  "script_sha256": "9daaae4fa68637bbbc4f565a3477eeb8ed3d6bb0b3bb84cd2c49985398f4922c",
   "counts": {
     "two_primary_presentations": 1168,
     "cyclic_presentations": 96,
@@ -16,10 +16,11 @@
     "two_primary": "All characters on one to three cyclic factors with exponents 1 through 4.",
     "cyclic": "All valid characters at orders 1 through 32, with an independent cyclic closed-form check.",
     "odd_and_mixed": "All valid characters on one to three factors of orders 2, 3, 4, 6, 9, 10, 12, 15 that contain an odd-primary part.",
-    "equivalences": [
-      "three-layer reduced",
-      "full integer-layer quotient"
+    "calculations": [
+      "relative one-form classification",
+      "absolute-bordism torsion-character comparison"
     ],
+    "interpretation": "The absolute comparison is mathematical; no additional one-form lattice p+ip equivalence is asserted.",
     "limitation": "Checks integer presentations and invariant factors; does not replace the topological completeness proof."
   }
 }

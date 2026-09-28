@@ -40,7 +40,7 @@ A coefficient must be zero on an odd-order factor.
 ```bash
 python classify.py --orders 2 --twist 1
 python classify.py --orders 4,6 --twist 1,0
-python classify.py --orders 8 --twist 1 --full
+python classify.py --orders 8 --twist 1 --absolute-bordism
 ```
 
 The output reports the invariant factors and group order. An empty list of
@@ -50,23 +50,40 @@ invariant factors denotes the trivial group. The first two examples give
 For a split lift, supply all-zero character coefficients. For the trivial
 symmetry, use `--orders 1 --twist 0`.
 
-## Which equivalence is being computed?
+## Which classification is being computed?
 
-By default, the calculation uses the three layers
-`(n_2, n_3, nu_4)`: Majorana-chain, complex-fermion, and bosonic decorations.
-It **fixes the integer p+ip layer and its redefinitions**. For a nonzero
-parity character, this relative classification contains a canonical
-universal subgroup `Z_16`.
+The default is the paper's **relative one-form classification**. Its data
+are `(n_2, n_3, nu_4)`: Majorana-chain, complex-fermion, and bosonic
+decorations. There is no symmetry-dependent `n_1` occupation in this pure
+one-form construction. For a nonzero parity character, the relative
+classification contains a canonical universal subgroup `Z_16`.
 
-`--full` additionally quotients by that universal subgroup, corresponding
-to integer-layer redefinitions and the torsion deformation convention of
-the associated twisted bordism theory. All remaining classes admit
-bosonic representatives. In particular, the twisted `Z_2` and `Z_4`
-examples have three-layer group `Z_16` and trivial full quotient.
+More precisely, write `G_w = Omega_4^w(B^2 A)` for absolute twisted-spin
+bordism, and let `i` include ordinary spin bordism at the trivial
+background. The default calculation gives
 
-The two conventions are intentionally reported separately. The absence
-of nonzero p+ip occupation classes does not eliminate constant
-integer-layer redefinitions.
+```text
+F(A,w) = Hom(G_w / image i, U(1)).
+```
+
+`--absolute-bordism` computes a separate mathematical object,
+
+```text
+D(A,w) = Hom(Tor G_w, U(1)).
+```
+
+For nonzero `w`, the map from `F` to `D` takes the quotient by the
+canonical universal `Z_16`; for zero `w`, the two groups agree. Within
+this mathematical quotient, every class is represented by the image of
+the bosonic sector. This comparison does **not** establish an additional
+symmetric local `p+ip` equivalence of the lattice model. In particular,
+the trivial absolute comparison for twisted `Z_2` and `Z_4` does not
+replace their relative one-form classification `Z_16`.
+
+The original `--full` name overstated that physical interpretation.
+It is retained as a deprecated alias for `--absolute-bordism` and prints
+a clarification to standard error. Both spellings report the same
+mathematical comparison in JSON. See [CHANGELOG.md](CHANGELOG.md).
 
 The scope is **finite Abelian, unitary, pure one-form symmetry** with a
 parity character. Continuous symmetries and nontrivial two-group
@@ -92,7 +109,7 @@ where `lambda: A -> Z_4` lifts `w`. The class `r_w` is independent of that
 lift after taking the bosonic quotient. For `w=0`, the answer is simply
 `B(A,0)`.
 
-For an even cyclic group with nonzero character, the three-layer group is
+For an even cyclic group with nonzero character, the relative one-form group is
 
 | Cyclic order | Classification |
 | --- | --- |
@@ -149,8 +166,8 @@ amplitudes.
 2. The closed product formula after primary decomposition and a change
    of basis adapted to the character.
 
-The reference run checks 5,858 presentations, covering both equivalence
-conventions, all characters on up to three two-primary factors with
+The reference run checks 5,858 presentations, covering the relative
+classification and the absolute-bordism comparison, all characters on up to three two-primary factors with
 exponents 1 through 4, cyclic orders through 32, and a family of odd and
 mixed-order products. Eight invalid inputs are also checked.
 All comparisons pass. These arithmetic checks supplement the
@@ -158,7 +175,8 @@ cohomological proof; they do not establish its topological inputs.
 
 Recorded results are in `results/`. The classification report includes
 the script hash, Python and SymPy versions, timestamp, and coverage.
-GitHub Actions runs the same two exact checkers.
+GitHub Actions runs the same two exact checkers and the CLI interpretation
+tests. Run those tests locally with `python -m unittest test_cli.py`.
 
 ## References
 
@@ -177,4 +195,6 @@ The mathematical inputs include:
   for the twisted supercohomology and relative `Z_16` convention.
 - D. S. Freed and M. J. Hopkins,
   [Reflection Positivity and Invertible Topological Phases](https://arxiv.org/abs/1604.06527),
-  for the torsion deformation comparison.
+  for the Anderson-dual universal coefficient sequence used in the
+  absolute-bordism comparison. This does not by itself establish an extra
+  higher-form lattice equivalence.
