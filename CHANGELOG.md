@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — pure higher-form no-go checks
+
+- Added independent polynomial obstruction detectors and explicit
+  integral-Bockstein background checks for two-form symmetry in 3+1D
+  and 4+1D, and three-form symmetry in 4+1D. All checks pass, including
+  the degree-four carry class for cyclic orders divisible by four.
+- Documented the full vanishing theorem for finite pure `k`-form symmetry,
+  `k >= 2`, in spacetime dimensions `k+2` and `k+3`, and the distinction
+  between the proof and the checks implemented here.
+- Added the checker to CI; existing one-form algorithms are unchanged.
+
 ## Unreleased — 4+1D finite one-form classification
 
 - Added `classify_41d.py` for the full finite-Abelian bosonic quotient

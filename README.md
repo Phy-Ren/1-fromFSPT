@@ -1,10 +1,10 @@
 # 1-fromFSPT
 
 Exact cochain calculations for fermionic phases with one-form symmetry
-in 2+1D through 4+1D, and finite-Abelian classification calculators for
-3+1D and 4+1D.
+in 2+1D through 4+1D, finite-Abelian classification calculators for
+3+1D and 4+1D, and obstruction checks for pure higher-form symmetries.
 
-The code accompanies the one-form solutions in the manuscript
+The code accompanies the one-form solutions and higher-form no-go results in the manuscript
 *Lattice Model of Higher-Form/Group Fermionic Symmetry-Protected Topological
 Phases*. It uses the analytic obstruction and stacking convention of
 Ning, Ren, Wang, Qi, and Gu, *Stacking Group of 3+1D Interacting Fermionic
@@ -23,6 +23,7 @@ python -m pip install -r requirements.txt
 python cochain_21d_verify.py --output results/cochain_21d_checks.json
 python cochain_oneform_verify.py --output results/cochain_oneform_checks.json
 python verify_classification_snf.py --output results/classification_checks.json
+python higherform_obstruction_verify.py --output results/higherform_obstruction_checks.json
 ```
 
 With `uv`, replace the environment setup with:
@@ -207,6 +208,54 @@ All three residual counts vanish. These are cochain checks; the script
 does not reconstruct the auxiliary-fermion circuit or prove completeness.
 It imports the higher-cup operations from `cochain_oneform_verify.py`.
 
+## Pure higher-form no-go checks
+
+For finite Abelian, unitary, pure higher-form symmetry, the manuscript
+proves that the following symmetry-dependent classifications are trivial:
+
+| Spacetime dimension | Symmetry | Occupation candidates |
+| --- | --- | --- |
+| 3+1D | 2-form | complex fermions `n_3` |
+| 4+1D | 2-form | Majorana chains `n_3`, complex fermions `n_4` |
+| 4+1D | 3-form | complex fermions `n_4` |
+
+The lower occupations vanish by connectivity. In particular, the full
+4+1D theory includes an integer `p+ip` occupation, but its group
+`H^2(X,Z)` and the residual integer group `H^1(X,Z)` both vanish.
+For these spaces `H^2(X,Z_2)=0`, so there is no degree-two fermionic
+twist. Every nonzero remaining fermionic candidate is obstructed.
+The raw 4+1D two-form bosonic classes are all incoming complex-fermion
+coboundaries; the other two cases have no raw bosonic response.
+The symmetry-independent gravitational spin sector is excluded.
+
+These three cases follow from the more general result for a finite
+Abelian pure `k`-form symmetry, `k >= 2`: the symmetry-dependent
+classification is trivial in spacetime dimensions `D = k+2` and
+`D = k+3`. The manuscript proves the full result using stabilization
+and the Thom isomorphism. The checker below tests the concrete
+cohomology detectors for the three displayed cases; it does not
+implement or replace that general proof.
+
+```bash
+python higherform_obstruction_verify.py --output results/higherform_obstruction_checks.json
+```
+
+This script uses only the Python standard library. It independently
+implements the Cartan formula in the polynomial cohomology of products
+of real projective spaces. The obstruction is detected by
+`rho_2 beta_2 Sq^2 n = Sq^3 n`. It verifies the resulting nonzero
+polynomials and the integral-Bockstein backgrounds that realize them.
+This includes the `Z_4` carry candidate
+`n_4 = rho_2 beta_4 a_3`: although `Sq^1 rho_2 a_3 = 0`, its
+`Sq^3 n_4` is nonzero.
+
+The recorded run checks the realizing backgrounds on 256 seeded
+seven-simplices of `B(Z_2^3)` for cyclic orders `2,4,6,8,12,16`.
+All checks pass. Nonvanishing is established by distinct monomials in a
+known polynomial cohomology ring; sampled simplex checks only verify
+the explicit background constructions. They are not used to infer
+cohomological nontriviality or completeness.
+
 ## 3+1D cochain checks
 
 `cochain_oneform_verify.py` implements normalized interval-cut products
@@ -261,8 +310,9 @@ cohomological proof; they do not establish its topological inputs.
 
 Recorded results are in `results/`. The classification report includes
 the script hash, Python and SymPy versions, timestamp, and coverage.
-GitHub Actions runs the cochain and classification checkers in all three
-dimensions and the 3+1D CLI interpretation tests. Run the latter locally with
+GitHub Actions runs the one-form cochain and classification checkers in
+all three dimensions, the higher-form obstruction checker, and the
+3+1D CLI interpretation tests. Run the latter locally with
 `python -m unittest test_cli.py`.
 
 ## References
@@ -272,6 +322,9 @@ The mathematical inputs include:
 - H. Cartan, [mod-two cohomology of Eilenberg-Mac Lane spaces](https://numdam.org/item/SHC_1954-1955__7_1_A10_0/)
   and [integral homology](https://numdam.org/item/SHC_1954-1955__7_1_A11_0/),
   Séminaire Henri Cartan 7 (1954–1955), Exposés 10 and 11.
+- A. Hatcher, [Spectral Sequences](https://pi.math.cornell.edu/~hatcher/AT/ATch5.pdf),
+  Theorems 5.32 and 5.37, for the higher-form cohomology generators used
+  by the obstruction calculation.
 - A. Kapustin and R. Thorngren,
   [Topological Field Theory on a Lattice, Discrete Theta-Angles and Confinement](https://arxiv.org/abs/1308.2926),
   for universal quadratic groups and Pontryagin squares.

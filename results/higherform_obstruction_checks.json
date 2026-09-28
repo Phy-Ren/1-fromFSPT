@@ -1,0 +1,41 @@
+{
+  "scope": "cohomology detectors and realizing Bockstein backgrounds",
+  "polynomial_detectors": {
+    "rho2_beta2_t1t2": "t1^2*t2 + t1*t2^2",
+    "Sq1_Sq2_rho2_beta2_t1t2": "t1^4*t2^2 + t1^2*t2^4",
+    "rho2_beta2_t1t2t3": "t1^2*t2*t3 + t1*t2^2*t3 + t1*t2*t3^2",
+    "Sq1_Sq2_rho2_beta2_t1t2t3": "t1^4*t2^2*t3 + t1^4*t2*t3^2 + t1^2*t2^4*t3 + t1^2*t2*t3^4 + t1*t2^4*t3^2 + t1*t2^2*t3^4",
+    "checks": {
+      "degree_three_reduction": true,
+      "degree_three_Adem": true,
+      "degree_three_top_square": true,
+      "degree_three_nonzero": true,
+      "degree_four_Adem": true,
+      "degree_four_six_distinct_monomials": true,
+      "degree_four_nonzero": true
+    }
+  },
+  "simplicial_background_checks": {
+    "seed": 20260928,
+    "seven_simplices": 256,
+    "cyclic_orders": [
+      2,
+      4,
+      6,
+      8,
+      12,
+      16
+    ],
+    "failures": {
+      "integral_degree_three_is_closed": 0,
+      "integral_degree_four_is_closed": 0,
+      "fundamental_degree_three_background_is_closed": 0,
+      "fundamental_degree_three_parity_is_correct": 0,
+      "carry_background_is_closed": 0,
+      "carry_is_exactly_beta2_t1t2t3": 0,
+      "fundamental_degree_four_background_is_closed": 0,
+      "fundamental_degree_four_parity_is_correct": 0
+    }
+  },
+  "total_failures": 0
+}
